@@ -5,6 +5,10 @@ import processing.core.PImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class Fairy extends Movable {
 
@@ -52,5 +56,10 @@ public class Fairy extends Movable {
             }
             return false;
         }
+    }
+
+    @Override
+    public List<java.awt.Point> computePath(java.awt.Point start, java.awt.Point end, Predicate<java.awt.Point> canPassThrough, BiPredicate<java.awt.Point, java.awt.Point> withinReach, Function<java.awt.Point, Stream<java.awt.Point>> potentialNeighbors) {
+        return List.of();
     }
 }

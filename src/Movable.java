@@ -4,7 +4,7 @@ import processing.core.PImage;
 
 import java.util.List;
 
-public abstract class Movable extends ActiveAnimatedEntity {
+public abstract class Movable extends ActiveAnimatedEntity implements PathingStrategy {
 
     public Movable(String id, Point position, List<PImage> images, double actionPeriod, double animationPeriod) {
         super(id, position, images, actionPeriod, animationPeriod);

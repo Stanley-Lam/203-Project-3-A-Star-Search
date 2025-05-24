@@ -1,4 +1,4 @@
-import src.Point;
+package src;
 
 import javax.sql.rowset.Predicate;
 
