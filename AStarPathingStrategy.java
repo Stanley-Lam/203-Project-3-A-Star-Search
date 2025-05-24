@@ -1,4 +1,3 @@
-import java.awt.Point;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -9,7 +8,7 @@ public class AStarPathingStrategy implements PathingStrategy {
 
 
     @Override
-    public List<java.awt.Point> computePath(java.awt.Point start, java.awt.Point end, Predicate<java.awt.Point> canPassThrough, BiPredicate<java.awt.Point, java.awt.Point> withinReach, Function<java.awt.Point, Stream<Point>> potentialNeighbors) {
+    public List<Point> computePath(Point start, Point end, Predicate<Point> canPassThrough, BiPredicate<Point, Point> withinReach, Function<Point, Stream<Point>> potentialNeighbors) {
         return List.of();
     }
 }
