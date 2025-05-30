@@ -12,7 +12,7 @@ public abstract class Dude extends Movable {
 
     public Dude(String id, Point position, List<PImage> images, double actionPeriod,
                 double animationPeriod, int resourceLimit) {
-        super(id, position, images, actionPeriod, animationPeriod, pathing_dude); //Add the pathing_dude
+        super(id, position, images, actionPeriod, animationPeriod, pathing_dude); //Added the pathing_dude
         this.resourceLimit = resourceLimit;
     }
 

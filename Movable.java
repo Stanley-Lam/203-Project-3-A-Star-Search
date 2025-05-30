@@ -5,7 +5,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 public abstract class Movable extends ActiveAnimatedEntity {
-    // Added the two entity paths
+    // Added the two entity pathing
     protected static final PathingStrategy pathing_dude = new AStarPathingStrategy();
     protected static final PathingStrategy pathing_fairy = new AStarPathingStrategy();
     private PathingStrategy pathstrat;
