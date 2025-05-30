@@ -5,6 +5,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 public abstract class Movable extends ActiveAnimatedEntity {
+    // Added the two entity pathings
     protected static final PathingStrategy pathing_dude = new AStarPathingStrategy();
     protected static final PathingStrategy pathing_fairy = new AStarPathingStrategy();
     private PathingStrategy pathstrat;
@@ -29,22 +30,6 @@ public abstract class Movable extends ActiveAnimatedEntity {
             return path.get(0);
         }
     }
-
-    /*public Point nextPosition(WorldModel world, Point destPos) {
-        int horiz = Integer.signum(destPos.x - this.getPosition().x);
-        Point newPos = new Point(this.getPosition().x + horiz, this.getPosition().y);
-
-        if (horiz == 0 || this.isInvalidMove(world, newPos)) {
-            int vert = Integer.signum(destPos.y - this.getPosition().y);
-            newPos = new Point(this.getPosition().x, this.getPosition().y + vert);
-
-            if (vert == 0 || this.isInvalidMove(world, newPos)) {
-                newPos = this.getPosition();
-            }
-        }
-
-        return newPos;
-    }*/
 
     public abstract boolean moveTo(WorldModel model, Entity target, EventScheduler scheduler);
 
