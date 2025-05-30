@@ -13,7 +13,7 @@ public class Fairy extends Movable {
     public static final int FAIRY_NUM_PROPERTIES = 2;
 
     public Fairy(String id, Point position, List<PImage> images, double actionPeriod, double animationPeriod) {
-        super(id, position, images, actionPeriod, animationPeriod, pathing_fairy); //Adding fairy pathing
+        super(id, position, images, actionPeriod, animationPeriod, pathing_fairy); //Add fairy pathing
     }
 
     @Override
