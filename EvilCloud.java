@@ -9,8 +9,8 @@ public class EvilCloud extends Movable {
     public static final int EVILCLOUD_ACTION_PERIOD = 1;
     public static final int EVILCLOUD_NUM_PROPERTIES = 2;
 
-    public EvilCloud(String id, Point position, List<PImage> images, double actionPeriod, double animationPeriod, PathingStrategy pathstrat) {
-        super(id, position, images, actionPeriod, animationPeriod, pathstrat);
+    public EvilCloud(String id, Point position, List<PImage> images, double actionPeriod, double animationPeriod) {
+        super(id, position, images, actionPeriod, animationPeriod, pathing_fairy);
     }
 
     @Override

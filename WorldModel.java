@@ -164,6 +164,7 @@ public final class WorldModel {
         }
     }
 
+    //Parse Cloud
     public static void parseCloud(WorldModel world, String[] properties, Point pt, String id, ImageStore imageStore) {
         if (properties.length == Cloud.CLOUD_NUM_PROPERTIES) {
             Entity entity = new Cloud(id, pt, imageStore.getImageList(Cloud.CLOUD_KEY),
@@ -173,7 +174,8 @@ public final class WorldModel {
             throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Cloud.CLOUD_KEY, Cloud.CLOUD_NUM_PROPERTIES));
         }
     }
-    //ParseBee
+
+    //Parse Bee
     public static void parseBee(WorldModel world, String[] properties, Point pt, String id, ImageStore imageStore) {
         if (properties.length == Bee.BEE_NUM_PROPERTIES) {
             Entity entity = new Bee(id, pt, imageStore.getImageList(Bee.BEE_KEY),
@@ -182,6 +184,17 @@ public final class WorldModel {
             world.tryAddEntity(entity);
         }else{
             throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Bee.BEE_KEY, Bee.BEE_NUM_PROPERTIES));
+        }
+    }
+
+    //Parse Evil Cloud
+    public static void parseEvilCloud(WorldModel world, String[] properties, Point pt, String id, ImageStore imageStore) {
+        if (properties.length == EvilCloud.EVILCLOUD_NUM_PROPERTIES) {
+            Entity entity = new EvilCloud(id, pt, imageStore.getImageList(EvilCloud.EVILCLOUD_KEY),
+                    Double.parseDouble(properties[EvilCloud.EVILCLOUD_ACTION_PERIOD]), Double.parseDouble(properties[EvilCloud.EVILCLOUD_ANIMATION_PERIOD]));
+            world.tryAddEntity(entity);
+        }else{
+            throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", EvilCloud.EVILCLOUD_KEY, EvilCloud.EVILCLOUD_NUM_PROPERTIES));
         }
     }
 
@@ -221,6 +234,7 @@ public final class WorldModel {
                 case Stump.STUMP_KEY -> parseStump(this, properties, pt, id, imageStore);
                 case Bee.BEE_KEY -> parseBee(this,properties,pt,id,imageStore);
                 case Cloud.CLOUD_KEY -> parseCloud(this, properties, pt, id, imageStore);
+                case EvilCloud.EVILCLOUD_KEY -> parseEvilCloud(this, properties, pt, id, imageStore);
                 default -> throw new IllegalArgumentException("Entity key is unknown");
             }
         }else{
