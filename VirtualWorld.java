@@ -103,7 +103,25 @@ public final class VirtualWorld extends PApplet {
                 case LEFT -> dx -= 1;
                 case RIGHT -> dx += 1;
             }
+
             view.shiftView(dx, dy);
+        }
+        if (key == 'r') {
+            println("Triggering Event");
+
+            Point spawnPoint = mouseToPoint();
+            List<PImage> clouds = imageStore.getImageList("cloud");
+
+            if (!world.isOccupied(spawnPoint) && !clouds.isEmpty()) {
+
+                String cloudID = "cloud_" + spawnPoint.x + "_" + spawnPoint.y;
+                double animationPeriod = 0.5;
+
+                Cloud cloud = new Cloud(cloudID, spawnPoint, clouds, animationPeriod);
+                world.addEntity(cloud);
+
+                cloud.scheduleActions(scheduler, world, imageStore);
+            }
         }
     }
 

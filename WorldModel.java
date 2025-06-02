@@ -163,6 +163,27 @@ public final class WorldModel {
             throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Stump.STUMP_KEY, Stump.STUMP_NUM_PROPERTIES));
         }
     }
+    //ParseBee
+    public static void parseBee(WorldModel world, String[] properties, Point pt, String id, ImageStore imageStore) {
+        if (properties.length == Bee.BEE_NUM_PROPERTIES) {
+            Entity entity = new Bee(id, pt, imageStore.getImageList(Bee.BEE_KEY),
+                    Double.parseDouble(properties[Bee.BEE_ACTION_PERIOD]),
+                    Double.parseDouble(properties[Bee.BEE_ANIMATION_PERIOD]),Movable.pathing_fairy);
+            world.tryAddEntity(entity);
+        }else{
+            throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Bee.BEE_KEY, Bee.BEE_NUM_PROPERTIES));
+        }
+    }
+
+    public static void parseCloud(WorldModel world, String[] properties, Point pt, String id, ImageStore imageStore) {
+        if (properties.length == Cloud.CLOUD_NUM_PROPERTIES) {
+            Entity entity = new Cloud(id, pt, imageStore.getImageList(Cloud.CLOUD_KEY),
+                    Double.parseDouble(properties[Cloud.CLOUD_ANIMATION_PERIOD]));
+            world.tryAddEntity(entity);
+        }else{
+            throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Cloud.CLOUD_KEY, Cloud.CLOUD_NUM_PROPERTIES));
+        }
+    }
 
     public Optional<PImage> getBackgroundImage(Point pos) {
         if (withinBounds(pos)) {
@@ -198,6 +219,8 @@ public final class WorldModel {
                 case Tree.TREE_KEY -> parseTree(this, properties, pt, id, imageStore);
                 case Sapling.SAPLING_KEY -> parseSapling(this, properties, pt, id, imageStore);
                 case Stump.STUMP_KEY -> parseStump(this, properties, pt, id, imageStore);
+                case Bee.BEE_KEY -> parseBee(this,properties,pt,id,imageStore);
+                case Cloud.CLOUD_KEY -> parseCloud(this, properties, pt, id, imageStore);
                 default -> throw new IllegalArgumentException("Entity key is unknown");
             }
         }else{
