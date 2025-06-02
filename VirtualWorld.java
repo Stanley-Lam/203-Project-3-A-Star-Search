@@ -112,11 +112,8 @@ public final class VirtualWorld extends PApplet {
             Point center = mouseToPoint();
             List<PImage> clouds = imageStore.getImageList("cloud");
 
-            int[][] directions = {
-                    {-1, -1}, {0, -1}, {1, -1},
-                    {-1,  0},          {1,  0},
-                    {-1,  1}, {0,  1}, {1,  1}
-            };
+            int[][] directions = {{-1, -1}, {0, -1}, {1, -1},
+                    {-1,  0}, {1,  0}, {-1,  1}, {0,  1}, {1,  1}};
 
             for (int[] dir : directions) {
                 Point spawnPoint  = new Point(center.x + dir[0], center.y + dir[1]);
