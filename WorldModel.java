@@ -154,13 +154,23 @@ public final class WorldModel {
             throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", House.HOUSE_KEY, House.HOUSE_NUM_PROPERTIES));
         }
     }
-
+    //parse cloud
     public static void parseStump(WorldModel world, String[] properties, Point pt, String id, ImageStore imageStore) {
         if (properties.length == Stump.STUMP_NUM_PROPERTIES) {
             Entity entity = new Stump(id, pt, imageStore.getImageList(Stump.STUMP_KEY));
             world.tryAddEntity(entity);
         }else{
             throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Stump.STUMP_KEY, Stump.STUMP_NUM_PROPERTIES));
+        }
+    }
+
+    public static void parseCloud(WorldModel world, String[] properties, Point pt, String id, ImageStore imageStore) {
+        if (properties.length == Cloud.CLOUD_NUM_PROPERTIES) {
+            Entity entity = new Cloud(id, pt, imageStore.getImageList(Cloud.CLOUD_KEY),
+                    Double.parseDouble(properties[Cloud.CLOUD_ANIMATION_PERIOD]));
+            world.tryAddEntity(entity);
+        }else{
+            throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Cloud.CLOUD_KEY, Cloud.CLOUD_NUM_PROPERTIES));
         }
     }
     //ParseBee
@@ -210,6 +220,7 @@ public final class WorldModel {
                 case Sapling.SAPLING_KEY -> parseSapling(this, properties, pt, id, imageStore);
                 case Stump.STUMP_KEY -> parseStump(this, properties, pt, id, imageStore);
                 case Bee.BEE_KEY -> parseBee(this,properties,pt,id,imageStore);
+                case Cloud.CLOUD_KEY -> parseCloud(this, properties, pt, id, imageStore);
                 default -> throw new IllegalArgumentException("Entity key is unknown");
             }
         }else{
