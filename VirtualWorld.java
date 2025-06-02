@@ -107,7 +107,7 @@ public final class VirtualWorld extends PApplet {
             view.shiftView(dx, dy);
         }
         if (key == 'r') {
-            println("Triggering Event");//
+            println("Triggering Event");
 
             Point spawnPoint = mouseToPoint();
             List<PImage> clouds = imageStore.getImageList("cloud");
