@@ -27,7 +27,8 @@ public class EvilCloud extends Movable {
                 model.moveEntity(scheduler, this, nextPos);
             }
             return false;
-        }}
+        }
+    }
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
