@@ -220,7 +220,7 @@ public final class WorldModel {
                 case Sapling.SAPLING_KEY -> parseSapling(this, properties, pt, id, imageStore);
                 case Stump.STUMP_KEY -> parseStump(this, properties, pt, id, imageStore);
                 case Bee.BEE_KEY -> parseBee(this,properties,pt,id,imageStore);
-                case Cloud.CLOUD_KEY -> parseCloud(this, properties, pt, id, imageStore);
+                case Cloud.CLOUD_KEY -> parseCloud(this, properties, pt, id, imageStore);//
                 default -> throw new IllegalArgumentException("Entity key is unknown");
             }
         }else{
