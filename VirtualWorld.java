@@ -109,18 +109,28 @@ public final class VirtualWorld extends PApplet {
         if (key == 'r') {
             println("Triggering Event");
 
-            Point spawnPoint = mouseToPoint();
+            Point center = mouseToPoint();
             List<PImage> clouds = imageStore.getImageList("cloud");
 
-            if (!world.isOccupied(spawnPoint) && !clouds.isEmpty()) {
+            int[][] directions = {
+                    {-1, -1}, {0, -1}, {1, -1},
+                    {-1,  0},          {1,  0},
+                    {-1,  1}, {0,  1}, {1,  1}
+            };
 
-                String cloudID = "cloud_" + spawnPoint.x + "_" + spawnPoint.y;
-                double animationPeriod = 0.5;
+            for (int[] dir : directions) {
+                Point spawnPoint  = new Point(center.x + dir[0], center.y + dir[1]);
 
-                Cloud cloud = new Cloud(cloudID, spawnPoint, clouds, animationPeriod);
-                world.addEntity(cloud);
+                if (!world.isOccupied(spawnPoint) && !clouds.isEmpty()) {
 
-                cloud.scheduleActions(scheduler, world, imageStore);
+                    String cloudID = "cloud_" + spawnPoint.x + "_" + spawnPoint.y;
+                    double animationPeriod = 0.5;
+
+                    Cloud cloud = new Cloud(cloudID, spawnPoint, clouds, animationPeriod);
+                    world.addEntity(cloud);
+
+                    cloud.scheduleActions(scheduler, world, imageStore);
+                }
             }
         }
     }
