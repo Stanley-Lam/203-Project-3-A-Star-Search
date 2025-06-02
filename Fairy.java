@@ -3,7 +3,9 @@ import processing.core.PImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+// Might have to implement Pathing strategy here
+// Maybe as a variable and part of the class
+// but that would also change nextposition I think
 public class Fairy extends Movable {
 
 
@@ -50,5 +52,14 @@ public class Fairy extends Movable {
             }
             return false;
         }
+    }
+    public boolean transform(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
+        Movable bee = new Bee(this.getId(), this.getPosition(), this.getImages(),
+                this.getActionPeriod(), this.getAnimationPeriod(), Movable.pathing_fairy);
+        world.removeEntity(scheduler, this);
+        world.addEntity(bee);
+        bee.scheduleActions(scheduler, world, imageStore);
+
+        return true;
     }
 }
