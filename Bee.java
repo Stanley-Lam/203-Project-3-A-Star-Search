@@ -36,9 +36,9 @@ public class Bee extends Movable {
             Point tgtPos = beeTarget.get().getPosition();
 
             if (this.moveTo(world, beeTarget.get(), scheduler)) {
-                Chirstmas chirstmas=new Chirstmas(Chirstmas.CHRISTMAS_KEY+"_"+beeTarget.get().getId(),
-                        tgtPos,imageStore.getImageList(Chirstmas.CHRISTMAS_KEY));
-                world.addEntity(chirstmas);
+                Christmas christmas = new Christmas(Christmas.CHRISTMAS_KEY+"_"+beeTarget.get().getId(),
+                        tgtPos,imageStore.getImageList(Christmas.CHRISTMAS_KEY));
+                world.addEntity(christmas);
             }
         }
 
