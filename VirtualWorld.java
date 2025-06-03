@@ -76,6 +76,41 @@ public final class VirtualWorld extends PApplet {
             System.out.println(entity.getId() + ": " + entity.getClass());
         }
 
+        println("Triggering Event");
+
+        //Point center = mouseToPoint();
+        List<PImage> clouds = imageStore.getImageList("cloud");
+        List<PImage> evil_clouds = imageStore.getImageList("evil_cloud");
+
+        int[][] directions = {{-1, -1}, {0, -1}, {1, -1},
+                {-1, 0}, {1, 0}, {0, 0}, {-1, 1}, {1, 1}};
+
+        if (!world.isOccupied(pressed) && !evil_clouds.isEmpty()) {
+
+            String evil_cloudID = "evilcloud_" + (pressed.x + 1) + "_" + (pressed.y + 1);
+            double actionPeriod = 1;
+            double animationPeriod = 0.5;
+
+            EvilCloud evil_cloud = new EvilCloud(evil_cloudID, pressed, evil_clouds, actionPeriod, animationPeriod);
+            world.addEntity(evil_cloud);
+
+            evil_cloud.scheduleActions(scheduler, world, imageStore);
+        }
+
+        for (int[] dir : directions) {
+            Point spawnPoint = new Point(pressed.x + dir[0], pressed.y + dir[1]);
+
+            if (!world.isOccupied(spawnPoint) && !clouds.isEmpty()) {
+
+                String cloudID = "cloud_" + spawnPoint.x + "_" + spawnPoint.y;
+                double animationPeriod = 0.5;
+
+                Cloud cloud = new Cloud(cloudID, spawnPoint, clouds, animationPeriod);
+                world.addEntity(cloud);
+
+                cloud.scheduleActions(scheduler, world, imageStore);
+            }
+        }
     }
 
     public void scheduleActions(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
@@ -105,43 +140,6 @@ public final class VirtualWorld extends PApplet {
             }
 
             view.shiftView(dx, dy);
-        }
-        if (key == 'r') {
-            println("Triggering Event");
-
-            Point center = mouseToPoint();
-            List<PImage> clouds = imageStore.getImageList("cloud");
-            List<PImage> evil_clouds = imageStore.getImageList("evil_cloud");
-
-            int[][] directions = {{-1, -1}, {0, -1}, {1, -1},
-                    {-1,  0}, {1,  0}, {0, 0}, {-1,  1}, {1,  1}};
-
-            if (!world.isOccupied(center) && !evil_clouds.isEmpty()) {
-
-                String evil_cloudID = "evilcloud_" + (center.x + 1) + "_" + (center.y + 1);
-                double actionPeriod = 1;
-                double animationPeriod = 0.5;
-
-                EvilCloud evil_cloud = new EvilCloud(evil_cloudID, center, evil_clouds, actionPeriod, animationPeriod);
-                world.addEntity(evil_cloud);
-
-                evil_cloud.scheduleActions(scheduler, world, imageStore);
-            }
-
-            for (int[] dir : directions) {
-                Point spawnPoint = new Point(center.x + dir[0], center.y + dir[1]);
-
-                if (!world.isOccupied(spawnPoint) && !clouds.isEmpty()) {
-
-                    String cloudID = "cloud_" + spawnPoint.x + "_" + spawnPoint.y;
-                    double animationPeriod = 0.5;
-
-                    Cloud cloud = new Cloud(cloudID, spawnPoint, clouds, animationPeriod);
-                    world.addEntity(cloud);
-
-                    cloud.scheduleActions(scheduler, world, imageStore);
-                }
-            }
         }
     }
 
