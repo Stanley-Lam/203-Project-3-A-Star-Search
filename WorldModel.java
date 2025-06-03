@@ -198,6 +198,16 @@ public final class WorldModel {
         }
     }
 
+    //Parse Evil Cloud
+    public static void parseChristmas(WorldModel world, String[] properties, Point pt, String id, ImageStore imageStore) {
+        if (properties.length == Christmas.CHRISTMAS_NUM_PROPERTIES) {
+            Entity entity = new Christmas(id, pt, imageStore.getImageList(Christmas.CHRISTMAS_KEY));
+            world.tryAddEntity(entity);
+        }else{
+            throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Christmas.CHRISTMAS_KEY, Christmas.CHRISTMAS_NUM_PROPERTIES));
+        }
+    }
+
     public Optional<PImage> getBackgroundImage(Point pos) {
         if (withinBounds(pos)) {
             return Optional.of(getBackgroundCell(pos).getCurrentImage());
@@ -235,6 +245,7 @@ public final class WorldModel {
                 case Bee.BEE_KEY -> parseBee(this,properties,pt,id,imageStore);
                 case Cloud.CLOUD_KEY -> parseCloud(this, properties, pt, id, imageStore);
                 case EvilCloud.EVILCLOUD_KEY -> parseEvilCloud(this, properties, pt, id, imageStore);
+                case Christmas.CHRISTMAS_KEY -> parseObstacle(this, properties, pt, id, imageStore);
                 default -> throw new IllegalArgumentException("Entity key is unknown");
             }
         }else{
