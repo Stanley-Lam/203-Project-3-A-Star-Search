@@ -1,3 +1,4 @@
+
 import processing.core.PImage;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class DudeNotFull extends Dude {
     private int resourceCount;
 
     public DudeNotFull(String id, Point position, List<PImage> images, double actionPeriod,
-                double animationPeriod, int resourceLimit, int resourceCount) {
+                       double animationPeriod, int resourceLimit, int resourceCount) {
         super(id, position, images, actionPeriod, animationPeriod, resourceLimit);
         this.resourceCount = resourceCount;
     }

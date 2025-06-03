@@ -6,3 +6,5 @@ The bee moves toward the nearest tree stump and turns it into a Christmas tree.
 
 Project Members:
 Stanley: Imported all the new entity image files and programmed the events to occur.
+Aarav: Worked on making the bee class with the functions moveTo and execute activity
+as well as create the transform function for fairy and dude

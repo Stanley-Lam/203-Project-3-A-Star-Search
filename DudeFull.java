@@ -1,3 +1,4 @@
+
 import processing.core.PImage;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Optional;
 public class DudeFull extends Dude {
 
     public DudeFull(String id, Point position, List<PImage> images, double actionPeriod,
-                double animationPeriod, int resourceLimit) {
+                    double animationPeriod, int resourceLimit) {
         super(id, position, images, actionPeriod, animationPeriod, resourceLimit);
     }
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
