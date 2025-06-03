@@ -20,6 +20,21 @@ public class Fairy extends Movable {
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+        // Check if cloud is nearby
+        int radius = 3;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                Point nearby = new Point(this.getPosition().x + dx, this.getPosition().y + dy);
+                if (world.withinBounds(nearby)) {
+                    Optional<Entity> occupant = world.getOccupant(nearby);
+                    if (occupant.isPresent() && occupant.get() instanceof Cloud) {
+                        this.transform(world, scheduler, imageStore);
+                        return; // stop executing other activity, fairy is now a bee
+                    }
+                }
+            }
+        }
+
         Optional<Entity> fairyTarget = world.findNearest(this.getPosition(), new ArrayList<>(List.of(Stump.class)));
 
         if (fairyTarget.isPresent()) {
@@ -53,13 +68,18 @@ public class Fairy extends Movable {
             return false;
         }
     }
+
+
     public boolean transform(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
-        Movable bee = new Bee(this.getId(), this.getPosition(), this.getImages(),
-                this.getActionPeriod(), this.getAnimationPeriod(), Movable.pathing_fairy);
+        Movable bee = new Bee(this.getId(), this.getPosition(), imageStore.getImageList(Bee.BEE_KEY),  // get actual Bee images
+                this.getActionPeriod(), this.getAnimationPeriod(), Movable.pathing_fairy
+        );
+
         world.removeEntity(scheduler, this);
         world.addEntity(bee);
         bee.scheduleActions(scheduler, world, imageStore);
 
         return true;
     }
+
 }
