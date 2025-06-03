@@ -43,7 +43,6 @@ public class EvilCloud extends Movable {
                 world.addEntity(zombie);
             }
         }
-
         scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.getActionPeriod());
     }
 }

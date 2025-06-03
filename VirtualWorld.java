@@ -111,12 +111,25 @@ public final class VirtualWorld extends PApplet {
 
             Point center = mouseToPoint();
             List<PImage> clouds = imageStore.getImageList("cloud");
+            List<PImage> evil_clouds = imageStore.getImageList("evil_cloud");
 
             int[][] directions = {{-1, -1}, {0, -1}, {1, -1},
-                    {-1,  0}, {1,  0}, {-1,  1}, {0,  1}, {1,  1}};
+                    {-1,  0}, {1,  0}, {0, 0}, {-1,  1}, {1,  1}};
+
+            if (!world.isOccupied(center) && !evil_clouds.isEmpty()) {
+
+                String evil_cloudID = "evilcloud_" + (center.x + 1) + "_" + (center.y + 1);
+                double actionPeriod = 1;
+                double animationPeriod = 0.5;
+
+                EvilCloud evil_cloud = new EvilCloud(evil_cloudID, center, evil_clouds, actionPeriod, animationPeriod);
+                world.addEntity(evil_cloud);
+
+                evil_cloud.scheduleActions(scheduler, world, imageStore);
+            }
 
             for (int[] dir : directions) {
-                Point spawnPoint  = new Point(center.x + dir[0], center.y + dir[1]);
+                Point spawnPoint = new Point(center.x + dir[0], center.y + dir[1]);
 
                 if (!world.isOccupied(spawnPoint) && !clouds.isEmpty()) {
 
