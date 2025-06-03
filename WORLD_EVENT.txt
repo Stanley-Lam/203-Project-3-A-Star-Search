@@ -8,3 +8,6 @@ Project Members:
 Stanley: Imported all the new entity image files and programmed the events to occur.
 Aarav: Worked on making the bee class with the functions moveTo and execute activity
 as well as create the transform function for fairy and dude
+Josh: Worked on making the evil cloud move towards entities of the dude class and
+transforming the dude class so that when the evil cloud comes near it,
+it transforms into a zombie.

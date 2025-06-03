@@ -26,8 +26,9 @@ public class Bee extends Movable {
             if (!this.getPosition().equals(nextPos)) {
                 model.moveEntity(scheduler, this, nextPos);
             }
-        return false;
-    }}
+            return false;
+        }
+    }
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {

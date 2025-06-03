@@ -8,6 +8,7 @@ public abstract class Movable extends ActiveAnimatedEntity {
     // Added the two entity pathing
     protected static final PathingStrategy pathing_dude = new AStarPathingStrategy();
     protected static final PathingStrategy pathing_fairy = new AStarPathingStrategy();
+    protected static final PathingStrategy pathing_zombie = new AStarPathingStrategy();
     private PathingStrategy pathstrat;
 
     public Movable(String id, Point position, List<PImage> images, double actionPeriod, double animationPeriod, PathingStrategy pathstrat) {

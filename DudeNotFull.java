@@ -17,6 +17,25 @@ public class DudeNotFull extends Dude {
     }
 
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+        // Check if evilcloud is nearby
+        int radius = 1;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                Point nearby = new Point(this.getPosition().x + dx, this.getPosition().y + dy);
+                if (world.withinBounds(nearby)) {
+                    Optional<Entity> occupant = world.getOccupant(nearby);
+                    if (occupant.isPresent() && occupant.get() instanceof EvilCloud) {
+                        this.zombietransform(world, scheduler, imageStore);
+                        return; // stop executing other activity, fairy is now a bee
+                    }
+                    if (occupant.isPresent() && occupant.get() instanceof Zombie) {
+                        this.zombietransform(world, scheduler, imageStore);
+                        return; // stop executing other activity, fairy is now a bee
+                    }
+                }
+            }
+        }
+
         Optional<Entity> target = world.findNearest(this.getPosition(), new ArrayList<>(Arrays.asList(Tree.class, Sapling.class)));
 
         if (target.isEmpty() || !this.moveTo(world, target.get(), scheduler) || !this.transform(world, scheduler, imageStore)) {
@@ -49,6 +68,16 @@ public class DudeNotFull extends Dude {
         }
 
         return false;
+    }
+
+    public boolean zombietransform(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
+        Movable zombie = new Zombie(this.getId(), this.getPosition(), imageStore.getImageList(Zombie.ZOMBIE_KEY),  // get actual Zombie images
+                this.getActionPeriod(), this.getAnimationPeriod());
+
+        world.removeEntity(scheduler, this);
+        world.addEntity(zombie);
+        zombie.scheduleActions(scheduler, world, imageStore);
+        return true;
     }
 
 }

@@ -18,17 +18,43 @@ public class Zombie extends Movable {
 
     @Override
     public boolean moveTo(WorldModel model, Entity target, EventScheduler scheduler) {
-        return false;
+        if (this.getPosition().adjacent(target.getPosition())) {
+            model.removeEntity(scheduler, target);
+            return true;
+        } else {
+            Point nextPos = this.nextPosition(model, target.getPosition());
+
+            if (!this.getPosition().equals(nextPos)) {
+                model.moveEntity(scheduler, this, nextPos);
+            }
+            return false;
+        }
     }
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        List<Point> neighbors = (List<Point>) PathingStrategy.CARDINAL_NEIGHBORS.apply(this.getPosition());
+        Optional<Entity> target = world.findNearest(this.getPosition(), List.of(DudeFull.class, DudeNotFull.class));
 
-        for (Point p : neighbors) {
-            if (world.withinBounds(p) && !world.isOccupied(p)) {
-                world.moveEntity(scheduler, this, p);
-                break;  // only move once per tick
+        if (target.isPresent()) {
+            Entity entity = target.get();
+            if (this.getPosition().adjacent(entity.getPosition())) {
+                Zombie zombie = new Zombie(
+                        Zombie.ZOMBIE_KEY + "_" + entity.getId(),
+                        entity.getPosition(),
+                        imageStore.getImageList(Zombie.ZOMBIE_KEY),
+                        Zombie.ZOMBIE_ACTION_PERIOD,
+                        Zombie.ZOMBIE_ANIMATION_PERIOD
+                );
+
+                world.removeEntity(scheduler, entity);
+                scheduler.unscheduleAllEvents(entity);
+                world.addEntity(zombie);
+                zombie.scheduleActions(scheduler, world, imageStore);
+            } else {
+                Point nextPos = this.nextPosition(world, entity.getPosition());
+                if (!this.getPosition().equals(nextPos)) {
+                    world.moveEntity(scheduler, this, nextPos);
+                }
             }
         }
 

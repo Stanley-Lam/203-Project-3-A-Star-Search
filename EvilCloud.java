@@ -12,7 +12,7 @@ public class EvilCloud extends Movable {
     public static final int EVILCLOUD_NUM_PROPERTIES = 2;
 
     public EvilCloud(String id, Point position, List<PImage> images, double actionPeriod, double animationPeriod) {
-        super(id, position, images, actionPeriod, animationPeriod, pathing_fairy);
+        super(id, position, images, actionPeriod, animationPeriod, pathing_zombie);
     }
 
     @Override
@@ -59,5 +59,4 @@ public class EvilCloud extends Movable {
 
         scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.getActionPeriod());
     }
-
 }
