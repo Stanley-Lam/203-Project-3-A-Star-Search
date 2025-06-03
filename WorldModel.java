@@ -205,7 +205,7 @@ public final class WorldModel {
                     Double.parseDouble(properties[Zombie.ZOMBIE_ACTION_PERIOD]), Double.parseDouble(properties[Zombie.ZOMBIE_ANIMATION_PERIOD]));
             world.tryAddEntity(entity);
         }else{
-            throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", EvilCloud.EVILCLOUD_KEY, EvilCloud.EVILCLOUD_NUM_PROPERTIES));
+            throw new IllegalArgumentException(String.format("%s requires %d properties when parsing", Zombie.ZOMBIE_KEY, Zombie.ZOMBIE_NUM_PROPERTIES));
         }
     }
 
