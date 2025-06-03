@@ -43,4 +43,14 @@ public abstract class Dude extends Movable {
     }
 
     public abstract boolean transform(WorldModel world, EventScheduler scheduler, ImageStore imageStore);
+
+    public boolean transformZombie(WorldModel world, EventScheduler scheduler, ImageStore imageStore){
+        Movable zombie = new Zombie(this.getId(), this.getPosition(), imageStore.getImageList(Zombie.ZOMBIE_KEY),  // get actual Bee images
+                this.getActionPeriod(), this.getAnimationPeriod(), Movable.pathing_dude
+        );
+        world.removeEntity(scheduler, this);
+        world.addEntity(zombie);
+        zombie.scheduleActions(scheduler, world, imageStore);
+        return true;
+    }
 }
