@@ -1,3 +1,4 @@
+
 import processing.core.PImage;
 
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ public class Zombie extends Movable {
     public static final int ZOMBIE_ACTION_PERIOD = 1;
     public static final int ZOMBIE_NUM_PROPERTIES = 2;
 
-    public Zombie(String id, Point position, List<PImage> images, double actionPeriod, double animationPeriod, PathingStrategy pathstrat) {
-        super(id, position, images, actionPeriod, animationPeriod, pathstrat);
+    public Zombie(String id, Point position, List<PImage> images, double actionPeriod, double animationPeriod) {
+        super(id, position, images, actionPeriod, animationPeriod, pathing_zombie);
     }
 
     @Override
@@ -22,6 +23,16 @@ public class Zombie extends Movable {
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+        List<Point> neighbors = (List<Point>) PathingStrategy.CARDINAL_NEIGHBORS.apply(this.getPosition());
 
+        for (Point p : neighbors) {
+            if (world.withinBounds(p) && !world.isOccupied(p)) {
+                world.moveEntity(scheduler, this, p);
+                break;  // only move once per tick
+            }
+        }
+
+        scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.getActionPeriod());
     }
+
 }

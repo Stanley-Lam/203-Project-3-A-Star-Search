@@ -32,17 +32,32 @@ public class EvilCloud extends Movable {
 
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        Optional<Entity> EvilCloudTarget = world.findNearest(this.getPosition(), new ArrayList<>(List.of(Dude.class)));
-        if (EvilCloudTarget.isPresent()) {
-            Point tgtPos = EvilCloudTarget.get().getPosition();
+        Optional<Entity> target = world.findNearest(this.getPosition(), List.of(DudeFull.class, DudeNotFull.class));
 
-            if (this.moveTo(world, EvilCloudTarget.get(), scheduler)) {
-                Zombie zombie = new Zombie (Zombie.ZOMBIE_KEY + "_" + EvilCloudTarget.get().getId(),
-                        tgtPos,imageStore.getImageList(Zombie.ZOMBIE_KEY), Zombie.ZOMBIE_ANIMATION_PERIOD,
-                        Zombie.ZOMBIE_ACTION_PERIOD, Movable.pathing_dude);
+        if (target.isPresent()) {
+            Entity entity = target.get();
+            if (this.getPosition().adjacent(entity.getPosition())) {
+                Zombie zombie = new Zombie(
+                        Zombie.ZOMBIE_KEY + "_" + entity.getId(),
+                        entity.getPosition(),
+                        imageStore.getImageList(Zombie.ZOMBIE_KEY),
+                        Zombie.ZOMBIE_ACTION_PERIOD,
+                        Zombie.ZOMBIE_ANIMATION_PERIOD
+                );
+
+                world.removeEntity(scheduler, entity);
+                scheduler.unscheduleAllEvents(entity);
                 world.addEntity(zombie);
+                zombie.scheduleActions(scheduler, world, imageStore);
+            } else {
+                Point nextPos = this.nextPosition(world, entity.getPosition());
+                if (!this.getPosition().equals(nextPos)) {
+                    world.moveEntity(scheduler, this, nextPos);
+                }
             }
         }
+
         scheduler.scheduleEvent(this, new Activity(this, world, imageStore), this.getActionPeriod());
     }
+
 }
