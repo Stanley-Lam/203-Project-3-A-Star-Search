@@ -1,0 +1,8 @@
+The new additions we made to the virtual world is a cloud event.
+When mouse pressed, a group of clouds and an "evil cloud" will appear.
+The evil cloud moves toward the nearest dude and turns them into a zombie.
+If fairy moves close to the normal clouds, it turns into a bee.
+The bee moves toward the nearest tree stump and turns it into a Christmas tree.
+
+Project Members:
+Stanley: Imported all the new entity image files and programmed the events to occur.
